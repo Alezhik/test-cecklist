@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import React, { Component } from 'react';
+import { Provider } from 'mobx-react';
 
-export default App;
+import { TravelStore } from './travel.store';
+import { TravelAdd } from './components/travel.add';
+import { TravelList } from './components/travel.list';
+
+export default class App extends Component {
+  private travelStore: TravelStore = new TravelStore();
+
+  render() {
+    return (
+      <Provider travelStore={this.travelStore}>
+        <div>
+          <TravelAdd />
+          <TravelList />
+        </div>
+      </Provider>
+    );
+  }
+};
