@@ -11,22 +11,22 @@ interface TodoAddProps {
 @inject('travelStore')
 @observer
 export class TravelAdd extends Component<TodoAddProps> {
-  @observable private task: string = ''
+  @observable private thingNmae: string = ''
 
-  handleTaskChange = ({ currentTarget: { value } }: React.SyntheticEvent<HTMLInputElement>) => {
-    this.task = value;
+  handleThingChange = ({ currentTarget: { value } }: React.SyntheticEvent<HTMLInputElement>) => {
+    this.thingNmae = value;
   };
 
   handleAddTravel = () => {
-    this.props.travelStore!.addTravel(this.task);
-    this.task = '';
+    this.props.travelStore!.addTravel(this.thingNmae);
+    this.thingNmae = '';
   };
 
   render() {
     return (
       <div>
-        <label>New Task</label>
-        <input value={this.task} onChange={this.handleTaskChange} />
+        <label>Add new thing</label>
+        <input value={this.thingNmae} onChange={this.handleThingChange} />
         <button onClick={this.handleAddTravel}>Add</button>
       </div>
     );

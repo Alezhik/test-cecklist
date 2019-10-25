@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import { TravelStore, Travel } from '../travel.store';
+import { TravelStore, Thing } from '../travel.store';
 import { TravelListItem } from './travel.list.item';
 
 interface TravelListProps {
@@ -10,8 +10,9 @@ interface TravelListProps {
 
 const TravelListComponent = ({ travelStore }: TravelListProps) => (
   <>
-    {travelStore!.travelList.map((travel: Travel, idx: number) => (
-      <TravelListItem key={idx} travel={travel} />
+    {console.log('TravelListComponent', travelStore)}
+    {travelStore!.travelList.map((thing: Thing, idx: number) => (
+      <TravelListItem key={idx} thing={thing} />
     ))}
   </>
 )
