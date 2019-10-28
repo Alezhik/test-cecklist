@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 
-import { TravelStore } from '../travel.store';
+import { TravelStore } from '../stores/travel.store';
 
 interface TodoAddProps {
   travelStore?: TravelStore

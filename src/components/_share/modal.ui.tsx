@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import { TravelStore } from '../../travel.store';
+import { TravelStore } from '../../stores/travel.store';
 
 interface ModalUi {
   travelStore?: TravelStore

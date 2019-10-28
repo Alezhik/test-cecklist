@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { observer, inject } from 'mobx-react';
 
-import { TravelStore, Thing } from '../travel.store';
+import { TravelStore, Thing } from '../stores/travel.store';
 
 interface TravelListItemProps {
   thing: Thing

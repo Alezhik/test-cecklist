@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 
-import { TravelStore } from './travel.store';
+import { TravelStore } from './stores/travel.store';
 import { TravelAdd } from './components/travel.add';
 import { TravelList } from './components/travel.list';
 import Modal from './components/_share/modal';

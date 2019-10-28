@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 
-import { TravelStore } from '../../travel.store';
+import { TravelStore } from '../../stores/travel.store';
 
 interface ModalProps { 
   travelStore?: TravelStore

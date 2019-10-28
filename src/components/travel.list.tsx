@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import { TravelStore, Thing } from '../travel.store';
+import { TravelStore, Thing } from '../stores/travel.store';
 import { TravelListItem } from './travel.list.item';
 
 interface TravelListProps {
