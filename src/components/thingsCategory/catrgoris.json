@@ -1,0 +1,33 @@
+{
+  "categoris": [
+    {
+      "name": "Одяг",
+      "id": 1,
+      "defaultThings": 3
+    }, {
+      "name": "Взуття",
+      "id": 2,
+      "defaultThings": 2
+    }, {
+      "name": "Документи",
+      "id": 3,
+      "defaultThings": 1
+    }, {
+      "name": "Спорядження",
+      "id": 4,
+      "defaultThings": 5
+    }, {
+      "name": "Аптечка",
+      "id": 5,
+      "defaultThings": 3
+    }, {
+      "name": "Гаджети",
+      "id": 6,
+      "defaultThings": 2
+    }, {
+      "name": "Інше",
+      "id": 7,
+      "defaultThings": 2
+    }
+  ]
+}

@@ -1,92 +1,104 @@
-import { observable, action, reaction, computed } from 'mobx';
+import { observable, action } from 'mobx';
+import { messageStore } from './message.store';
+import { thingStore } from './thing.store';
+import categorys from '../components/thingsCategory/catrgoris.json';
 
-export interface Thing {
-  name: string
-  category: string
-  synonyus: string[]
-  useCount: number
+export interface Travel {
+  thing_id: number
   isComplete: boolean
-  id: number
   count: number
-};
-
-export interface Message {
-  message: string
-  show: boolean
+  id: number
 };
 
 export class TravelStore {
-  @observable travelList: Thing[] = [];
-  @observable message: Message = { message: "", show: false };
-  idCount: number = 0;
+  @observable travelList: Travel[] = [];
+  @observable messageStore = messageStore;
+  @observable thingStore = thingStore;
+
+  idInList: number = 0;
+
+  @action
+  createNewTravelList() {
+    let things: any[] = [];
+    categorys.categoris.forEach(category => {
+      const newThings = thingStore.getThingToCategory(category.id, category.defaultThings);
+      things = [ ...things, ...newThings ];
+    })
+
+    things.forEach(thing => this.addTravel(thing.name, thing.category_id));
+  }
 
   constructor() {
-    reaction(
-      () => this.travelList.filter(thing => !thing.isComplete),
-      incompletedThings => {
-        if (incompletedThings.length > 5) {
-          alert("Dude. You've got too much on your plate.")
-        }
-      }
-    )
-  }
-
-  @computed
-  get completedThings(): number {
-    return this.travelList.filter(thing => thing.isComplete).length;
+    this.createNewTravelList();
   }
 
   @action
-  findThings(name: string): Boolean {
-    return this.travelList.filter(thing => thing.name === name).length === 0;
+  getIdInList(): number {
+    return this.idInList++;
   }
 
   @action
-  addMessage(message: Message) {
-    this.message.message = message.message;
-    this.message.show = message.show;
-    return message;
+  setCompleted(id: number, isComplete: boolean = true) {
+    this.travelList.find(travel => travel.id === id)!.isComplete = isComplete;
   }
 
   @action
-  getId(): number {
-    return this.idCount++;
+  getTravel(name: string): Travel | undefined {
+    const duplicateThing = thingStore.getThing(undefined, name);
+    if (!duplicateThing) {
+      return undefined
+    }
+    return this.travelList.find(travel => travel.thing_id === duplicateThing.id);
   }
 
   @action
-  addTravel(name: string, category: string = "first") {
-    if (this.findThings(name)) {
+  addTravel(name: string, category_id: number = 7) {
+    const duplicateThing = this.getTravel(name);
+    if (!duplicateThing) {
+      const newThingId = thingStore.addThing(name, category_id);
       this.travelList.push({ 
-        name, 
-        isComplete: false, 
-        category,
-        synonyus: [],
-        useCount: 1,
-        id: this.getId(),
+        thing_id: newThingId,
+        isComplete: false,
+        id: this.getIdInList(),
         count: 1
       });
     } else {
-      this.addMessage({ message: "This thing is already in your list", show: true });
+      this.messageStore.addMessage({ message: "This thing is already in your list", show: true });
     }
   }
 
   @action
-  completeTravel(completedTravel: Thing) {
-    this.travelList.find(thing => thing === completedTravel)!.isComplete = true;
-  }
-
-  @action
   removeTravel(id: number) {
-    this.travelList.splice(this.travelList.findIndex(thing => thing.id === id), 1);
+    const deletedTravelID = this.travelList.findIndex(travel => travel.id === id);
+    thingStore.changeCount(this.travelList[deletedTravelID].thing_id, false);
+    this.travelList.splice(deletedTravelID, 1);
   }
 
   @action
-  editTravel(id: number, name: string, category: string = "first", count: number) {
-    const thingIndex = this.travelList.findIndex(thing => thing.id === id);
-    this.travelList[thingIndex].name = name;
-    this.travelList[thingIndex].category = category;
-    this.travelList[thingIndex].count = count;
-    this.travelList = [...this.travelList];
+  editTravel(id: number, name: string, category_id: number = 7, count: number) {
+    const travelIndex = this.travelList.findIndex(thing => thing.id === id);
+    const oldThing = thingStore.getThing(this.travelList[travelIndex].thing_id);
+    const newTravel = travelStore.getTravel(name);
+    const newThing = thingStore.getThing(undefined, name);
+
+    if (!!newTravel && newThing!.id !== oldThing!.id) { 
+      thingStore.changeCount(oldThing!.id, false);
+      travelStore.removeTravel(id);
+      return null
+    } else {
+      if (oldThing!.countUse === 1 || newThing!.id === oldThing!.id) {
+        thingStore.editThing(oldThing!.id, name, category_id);
+      } else {
+        this.addTravel(name, category_id);
+      }
+    }
+
+    this.travelList[travelIndex].count = count;
+  }
+
+  @action
+  clearTravelList() {
+    this.travelList = [];
   }
 }
 

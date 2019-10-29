@@ -22,3 +22,11 @@ code {
   top: 0;
   width: 100%;
 }
+
+.listBlock {
+  display: flex;
+  justify-content: space-evenly;
+}
+.crossed {
+  text-decoration: line-through;
+}

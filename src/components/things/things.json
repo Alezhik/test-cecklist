@@ -1,0 +1,65 @@
+{
+  "things": [
+    {
+      "name": "Футболка",
+      "category_id": 1,
+      "synonyus_ids": [],
+      "countUse": 2,
+      "id": 0
+    }, {
+      "name": "Светер",
+      "category_id": 1,
+      "synonyus_ids": [],
+      "countUse": 2,
+      "id": 1
+    }, {
+      "name": "Штани",
+      "category_id": 1,
+      "synonyus_ids": [],
+      "countUse": 1,
+      "id": 2
+    }, {
+      "name": "Джинси",
+      "category_id": 1,
+      "synonyus_ids": [],
+      "countUse": 2,
+      "id": 3
+    }, {
+      "name": "Шкарпетки",
+      "category_id": 1,
+      "synonyus_ids": [],
+      "countUse": 2,
+      "id": 4
+    }, {
+      "name": "Кросівки",
+      "category_id": 2,
+      "synonyus_ids": [],
+      "countUse": 1,
+      "id": 5
+    }, {
+      "name": "Кеди",
+      "category_id": 1,
+      "synonyus_ids": [],
+      "countUse": 2,
+      "id": 6
+    }, {
+      "name": "Мешти",
+      "category_id": 2,
+      "synonyus_ids": [],
+      "countUse": 0,
+      "id": 7
+    }, {
+      "name": "Телефон",
+      "category_id": 6,
+      "synonyus_ids": [],
+      "countUse": 2,
+      "id": 8
+    }, {
+      "name": "Паспорт",
+      "category_id": 3,
+      "synonyus_ids": [],
+      "countUse": 1,
+      "id": 9
+    }
+  ]
+}

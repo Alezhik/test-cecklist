@@ -1,27 +1,23 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import { TravelStore } from '../../stores/travel.store';
+import { MessageStore } from '../../stores/message.store';
 
 interface ModalUi {
-  travelStore?: TravelStore
+  messageStore?: MessageStore
 };
 
-const ChildComponent = ({ travelStore }: ModalUi) => {
-
-  console.log('Child travelStore', travelStore!.message.show);
+const ChildComponent = ({ messageStore }: ModalUi) => {
 
   const handleAddMessage = () => {
-    travelStore!.addMessage({ message: "", show: false });
+    messageStore!.addMessage({ message: "", show: false });
   };
 
-  if (travelStore!.message.show) {
-    console.log('RENDER must be there');
+  if (messageStore!.message.show) {
     return (
       <div className="modal">
-        {console.log('travelStore', travelStore)}
         <div>
-          {travelStore!.message.message}
+          {messageStore!.message.message}
         </div>
         <button onClick={handleAddMessage}>Ok</button>
       </div>
@@ -30,4 +26,4 @@ const ChildComponent = ({ travelStore }: ModalUi) => {
   return null
 }
 
-export const Child = inject('travelStore')(observer(ChildComponent));
+export const Child = inject('messageStore')(observer(ChildComponent));
