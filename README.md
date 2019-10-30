@@ -1,3 +1,7 @@
+My first test project with MobX and TypeScript
+
+----------- Run -----------
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
