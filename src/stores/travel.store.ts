@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 import { messageStore } from './message.store';
 import { thingStore } from './thing.store';
-import categorys from '../components/thingsCategory/catrgoris.json';
+import categorys from '../constants/thingsCategory/catrgoris.json';
 
 export interface Travel {
   thing_id: number
@@ -17,32 +17,14 @@ export class TravelStore {
 
   idInList: number = 0;
 
-  @action
-  createNewTravelList() {
-    let things: any[] = [];
-    categorys.categoris.forEach(category => {
-      const newThings = thingStore.getThingToCategory(category.id, category.defaultThings);
-      things = [ ...things, ...newThings ];
-    })
-
-    things.forEach(thing => this.addTravel(thing.name, thing.category_id));
-  }
-
   constructor() {
     this.createNewTravelList();
   }
 
-  @action
   getIdInList(): number {
     return this.idInList++;
   }
 
-  @action
-  setCompleted(id: number, isComplete: boolean = true) {
-    this.travelList.find(travel => travel.id === id)!.isComplete = isComplete;
-  }
-
-  @action
   getTravel(name: string): Travel | undefined {
     const duplicateThing = thingStore.getThing(undefined, name);
     if (!duplicateThing) {
@@ -52,12 +34,28 @@ export class TravelStore {
   }
 
   @action
+  createNewTravelList() {
+    this.travelList = [];
+    let things: any[] = [];
+    categorys.categories.forEach(category => {
+      const newThings = thingStore.getThingToCategory(category.id, category.defaultThings);
+      things = [ ...things, ...newThings ];
+    })
+
+    things.forEach(thing => this.addTravel(thing.name, thing.category_id));
+  }
+
+  @action
+  setCompleted(id: number, isComplete: boolean = true) {
+    this.travelList.find(travel => travel.id === id)!.isComplete = isComplete;
+  }
+
+  @action
   addTravel(name: string, category_id: number = 7) {
     const duplicateThing = this.getTravel(name);
     if (!duplicateThing) {
-      const newThingId = thingStore.addThing(name, category_id);
       this.travelList.push({ 
-        thing_id: newThingId,
+        thing_id: thingStore.addThing(name, category_id),
         isComplete: false,
         id: this.getIdInList(),
         count: 1
@@ -84,7 +82,6 @@ export class TravelStore {
     if (!!newTravel && newThing!.id !== oldThing!.id) { 
       thingStore.changeCount(oldThing!.id, false);
       travelStore.removeTravel(id);
-      return null
     } else {
       if (oldThing!.countUse === 1 || newThing!.id === oldThing!.id) {
         thingStore.editThing(oldThing!.id, name, category_id);

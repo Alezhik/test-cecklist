@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 
 import { TravelStore, Travel } from '../../stores/travel.store';
 import { TravelCheckListItem } from './travel.checklist.item';
-import categoris from '../thingsCategory/catrgoris.json';
+import categories from '../../constants/thingsCategory/catrgoris.json';
 import { ThingStore } from '../../stores/thing.store';
 
 interface TravelListProps {
@@ -25,26 +25,25 @@ const TravelCheckListComponent = ({ travelStore, thingStore }: TravelListProps) 
           checked={travel.isComplete}
         />
       )
-    }
-    return null
+    };
+    return null;
   })
 
   let listContent = <>{listReturn(travelStore!.travelList)}</>;
 
   switch (sortedTravelList) {
     case "category":
-      listContent = <>{categoris.categoris.map(category => {
-        const things = travelStore!.travelList.filter(travel => {
-          const thing = thingStore!.getThing(travel.thing_id);
-          return thing!.category_id === category.id
-        });
+      listContent = <>{categories.categories.map(category => {
+        const things = travelStore!.travelList.filter(
+          travel => thingStore!.getThing(travel.thing_id)!.category_id === category.id
+        );
         return (
           <>
             <h6>{category.name}</h6>
             {listReturn(things)}
           </>
         )}
-      )}</>
+      )}</>;
       break;
     case "take":
       listContent = <>
@@ -52,7 +51,7 @@ const TravelCheckListComponent = ({ travelStore, thingStore }: TravelListProps) 
         {listReturn(travelStore!.travelList.filter(travel => !!travel.isComplete))}
         <h6>Not done</h6>
         {listReturn(travelStore!.travelList.filter(travel => !travel.isComplete))}
-      </>
+      </>;
       break;
     case "default":
     default:

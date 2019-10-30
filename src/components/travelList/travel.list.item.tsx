@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 
 import { TravelStore, Travel } from '../../stores/travel.store';
 import { ThingStore } from '../../stores/thing.store';
-import categoris from '../thingsCategory/catrgoris.json';
+import categories from '../../constants/thingsCategory/catrgoris.json';
 
 interface TravelListItemProps {
   travel: Travel
@@ -56,7 +56,7 @@ const TravelListItemComponent = ({ travel, travelStore, thingStore }: TravelList
       onChange={obj => handleCountChange(obj.target.value)}
     />
     <select name="select" onChange={e => handleSelect(e)} value={value.category_id}>
-      {categoris.categoris.map((category: Category) => 
+      {categories.categories.map((category: Category) => 
         <option
           value={category.id}
           key={`category_${category.id}`}
@@ -80,12 +80,13 @@ const TravelListItemComponent = ({ travel, travelStore, thingStore }: TravelList
           <button onClick={handleChangeTravel} key="save_button">save</button>
         </>
       : 
-      <>
-        {`${thing!.name} - ${thing!.countUse}`}
-        {sameDom()}
-        <button onClick={() => setValue({ ...value, edit: true})} key="edit_button">edit</button>
-        <button onClick={() => handlerDelete(travel.id)} key="delete_button">x</button>
-      </>}
+        <>
+          {`${thing!.name} - ${thing!.countUse}`}
+          {sameDom()}
+          <button onClick={() => setValue({ ...value, edit: true})} key="edit_button">edit</button>
+          <button onClick={() => handlerDelete(travel.id)} key="delete_button">x</button>
+        </>
+      }
     </div>
   ) 
 };

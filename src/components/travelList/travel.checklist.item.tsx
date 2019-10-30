@@ -32,4 +32,4 @@ const TravelCheckListItemComponent = ({ thing, travelStore, travel_id, checked }
   ) 
 };
 
-export const TravelCheckListItem = inject('travelStore', 'thingStore')(observer(TravelCheckListItemComponent));
+export const TravelCheckListItem = inject('travelStore')(observer(TravelCheckListItemComponent));

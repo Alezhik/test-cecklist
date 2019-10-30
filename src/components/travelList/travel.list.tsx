@@ -16,7 +16,6 @@ const TravelListComponent = ({ travelStore }: TravelListProps) => {
   }
 
   const handleNewList = () => {
-    travelStore!.clearTravelList();
     travelStore!.createNewTravelList();
   }
 

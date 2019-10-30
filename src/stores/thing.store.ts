@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import things from '../components/things/things.json';
+import things from '../constants/things/things.json';
 
 import { filter } from 'lodash';
 
@@ -15,7 +15,6 @@ export class ThingStore {
   idCount: number = 10;
   @observable thingList: Thing[] = things.things;
 
-  @action
   getId(): number {
     return this.idCount++;
   }
@@ -61,13 +60,13 @@ export class ThingStore {
     const thingIndex = this.thingList.findIndex(thing => thing.id === id);
     this.thingList[thingIndex].name = name;
     this.thingList[thingIndex].category_id = category_id;
-    this.thingList = [...this.thingList];
+    // this.thingList = [...this.thingList];
   }
 
-  @action
-  deleteThing(id: number) {
-    this.changeCount(id, false);
-  }
+  // @action
+  // deleteThing(id: number) {
+  //   this.changeCount(id, false);
+  // }
 
   @action
   getThingToCategory(category_id: number, maxCount: number) {
